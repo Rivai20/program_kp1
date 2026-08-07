@@ -1,0 +1,13 @@
+{
+  "name": "sitranskip-lite-api",
+  "version": "1.0.0",
+  "description": "Dynamic transcript management app with API and file uploads",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "multer": "^2.0.4"
+  }
+}

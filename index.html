@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiTranskip Lite</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <main class="container">
+    <section class="page page-active" id="page-landing">
+      <div class="hero-card">
+        <div class="hero-icon">🎓</div>
+        <h1>SiTranskip Lite</h1>
+        <p>Aplikasi pengelolaan transkip nilai mahasiswa yang ringan dan mudah digunakan.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="showPage('page-login')">Masuk</button>
+          <button class="btn btn-secondary" onclick="showPage('page-register')">Daftar</button>
+        </div>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h3>Login & Register</h3>
+          <p>Masuk sebagai admin atau mahasiswa dengan akun sederhana.</p>
+        </div>
+        <div class="feature">
+          <h3>Data Mahasiswa</h3>
+          <p>Admin dapat melihat, menambah, mengedit, dan menghapus data mahasiswa.</p>
+        </div>
+        <div class="feature">
+          <h3>Transkip</h3>
+          <p>Upload dan lihat daftar transkip nilai secara sederhana.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-login">
+      <div class="card card-auth">
+        <h2>Masuk</h2>
+        <div class="alert" id="login-alert"></div>
+        <label>NPM</label>
+        <input type="text" id="login-npm" placeholder="2021xxxxxxx">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••">
+        <button class="btn btn-primary" onclick="loginUser()">Masuk</button>
+        <p class="note">Belum punya akun? <a onclick="showPage('page-register')">Daftar</a></p>
+        <p class="note"><a onclick="showPage('page-landing')">Kembali</a></p>
+      </div>
+    </section>
+
+    <section class="page" id="page-register">
+      <div class="card card-auth">
+        <h2>Daftar</h2>
+        <div class="alert" id="register-alert"></div>
+        <form id="register-form">
+          <label>Nama</label>
+          <input type="text" id="reg-name" name="name" placeholder="Nama lengkap">
+          <label>NPM</label>
+          <input type="text" id="reg-npm" name="npm" placeholder="2021xxxxxxx">
+          <label>Program Studi</label>
+          <input type="text" id="reg-prodi" name="prodi" placeholder="Teknik Informatika">
+          <label>Password</label>
+          <input type="password" id="reg-password" name="password" placeholder="Minimal 6 karakter">
+          <label>Konfirmasi Password</label>
+          <input type="password" id="reg-confirm-password" name="confirmPassword" placeholder="Ulangi password">
+          <label>Upload File Pendukung</label>
+          <input type="file" id="reg-file-input" name="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+          <p class="help-text">File akan disimpan di server sebagai bukti pendukung akun.</p>
+          <button class="btn btn-primary" type="button" onclick="registerUser()">Daftar</button>
+        </form>
+        <p class="note">Sudah punya akun? <a onclick="showPage('page-login')">Masuk</a></p>
+      </div>
+    </section>
+
+    <section class="page" id="page-admin">
+      <div class="topbar">
+        <div>
+          <h2>Admin Dashboard</h2>
+          <p id="admin-welcome"></p>
+        </div>
+        <button class="btn btn-danger" onclick="handleLogout()">Keluar</button>
+      </div>
+      <div class="grid-2 gap">
+        <div class="card">
+          <h3>Statistik</h3>
+          <div class="stat-list">
+            <div>Total Mahasiswa<br><strong id="stat-students">0</strong></div>
+            <div>Total Transkip<br><strong id="stat-transcripts">0</strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Aksi Cepat</h3>
+          <button class="btn btn-secondary" onclick="openTranscriptModal()">Tambah Transkip</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Daftar Mahasiswa</h3>
+        </div>
+        <ul id="student-list"></ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Daftar Transkip</h3>
+        </div>
+        <ul id="transcript-list"></ul>
+      </div>
+      <div class="card">
+        <h3>Pesan Mahasiswa</h3>
+        <div id="admin-messages"></div>
+        <label>Kirim pesan ke mahasiswa</label>
+        <select id="admin-message-to"></select>
+        <textarea id="admin-message-text" class="message-input" placeholder="Tulis pesan untuk mahasiswa..."></textarea>
+        <button class="btn btn-primary" onclick="sendAdminMessage()">Kirim Pesan</button>
+      </div>
+    </section>
+
+    <section class="page" id="page-mahasiswa">
+      <div class="topbar">
+        <div>
+          <h2>Portal Mahasiswa</h2>
+          <p id="mhs-welcome"></p>
+        </div>
+        <button class="btn btn-danger" onclick="handleLogout()">Keluar</button>
+      </div>
+      <div class="grid-2 gap">
+        <div class="card">
+          <h3>Profil</h3>
+          <div class="profile-row"><strong>Nama:</strong> <span id="mhs-name"></span></div>
+          <div class="profile-row"><strong>NPM:</strong> <span id="mhs-npm"></span></div>
+          <div class="profile-row"><strong>Program Studi:</strong> <span id="mhs-prodi"></span></div>
+        </div>
+        <div class="card">
+          <h3>Transkip Saya</h3>
+          <div id="mhs-transcripts"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Pesan Admin</h3>
+        <div id="message-box"></div>
+        <textarea id="student-message-text" class="message-input" placeholder="Kirim pesan ke admin..."></textarea>
+        <button class="btn btn-primary" onclick="sendStudentMessage()">Kirim Pesan</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop hidden" id="modal-student">
+    <div class="modal-card">
+      <h3 id="student-modal-title">Tambah Mahasiswa</h3>
+      <div class="alert" id="student-modal-alert"></div>
+      <label>Nama</label>
+      <input type="text" id="student-name">
+      <label>NPM</label>
+      <input type="text" id="student-npm">
+      <label>Prodi</label>
+      <input type="text" id="student-prodi">
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('modal-student')">Batal</button>
+        <button class="btn btn-primary" onclick="saveStudent()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modal-transcript">
+    <div class="modal-card">
+      <h3>Tambah Transkip</h3>
+      <div class="alert" id="transcript-modal-alert"></div>
+      <form id="transcript-form">
+        <label>Mahasiswa</label>
+        <select id="transcript-student" name="studentId"></select>
+        <label>Semester</label>
+        <input type="text" id="transcript-semester" name="semester" placeholder="Contoh: 4 atau kumulatif">
+        <label>Upload File Transkip</label>
+        <input type="file" id="transcript-file-input" name="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+        <p class="help-text">File akan disimpan di server dan tersedia untuk mahasiswa terkait.</p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" onclick="closeModal('modal-transcript')">Batal</button>
+          <button class="btn btn-primary" type="button" onclick="uploadTranscript()">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="client.js"></script>
+</body>
+</html>

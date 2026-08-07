@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Administrator",
+      "npm": "admin",
+      "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+      "role": "admin",
+      "prodi": "Administrator",
+      "created_at": "2026-06-30T08:03:46.637Z"
+    },
+    {
+      "id": 2,
+      "name": "Budi Santoso",
+      "npm": "2021TI001",
+      "password_hash": "703b0a3d6ad75b649a28adde7d83c6251da457549263bc7ff45ec709b0a8448b",
+      "role": "mahasiswa",
+      "prodi": "Teknik Informatika",
+      "created_at": "2026-06-30T08:03:46.638Z"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "name": "Administrator",
+      "npm": "admin",
+      "prodi": "Administrator",
+      "created_at": "2026-06-30T08:03:46.638Z"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "name": "Budi Santoso",
+      "npm": "2021TI001",
+      "prodi": "Teknik Informatika",
+      "created_at": "2026-06-30T08:03:46.638Z"
+    }
+  ],
+  "transcripts": [],
+  "messages": []
+}
